@@ -1,0 +1,36 @@
+<!-- index.html (ch08www project) -->
+{% extends "base.html" %}
+{% block title %}我有話要說{% endblock %}
+{% block content %}
+<div class='container'>
+<div class='row'>
+    <div class='col-md-12'>
+        <div class='panel panel-default'>
+            <div class='panel-heading' align=center>
+            <h3>~~寶寶心裡苦，寶寶只在這裡說~~</h3>
+    </div>
+</div>
+
+
+{% for p in posts %}
+    {% cycle "<div class='row'> <div class='col-md-6'>" "<div class='col-md-6'>" %}
+        <div class='panel {%cycle "panel-primary" "panel-info" "panel-warning" "panel-success" %}'>
+            <div class='panel-heading'>
+                <table width='100%'>
+                    <tr>
+                        <td>
+                            【{{ p.nickname }}】覺得{{ p.mood }}
+                        </td>
+                        <td align=right>
+                            <i><small>{{ p.pub_time }}</small></i>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class='panel-body'>{{ p.message | linebreaks }}</div>
+        </div>
+    </div>
+    {% cycle "" "</div>"%}
+{% endfor %}
+</div>
+{% endblock %}
