@@ -104,23 +104,46 @@ def userinfo(request):
     if request.user.is_authenticated():
         #get curent login user info  from auth.models User //request.user is User model object.
         username = request.user.username
+        #get user info  from User (not models.User)
+        user = User.objects.get(username=username)
         try:
-            #get user info  from User (not models.User)
-            user = User.objects.get(username=username)
+            #read user info from Profile database by user //User<1:!>Profile
             userinfo = models.Profile.objects.get(user=user)
         except:
-            pass
-    '''
-    if 'username' in request.session:
-        username = request.session['username']
-    else:
-        return redirect('/login/')
+            #if read empty userinfo
+            #create instance Profile for specific user
+            userinfo = models.Profile(user=user)
 
-    try:
-        userinfo = models.User.objects.get(name=username)
-    except:
-        pass
-    '''
+    #send ProfileForm POST?
+    if request.method == 'POST':
+        #WRITE
+        #container [form ProfileForm]  save [profile instance(user post)]
+        profile_form = forms.ProfileForm(request.POST, instance=userinfo)
+        if profile_form.is_valid():
+            messages.add_message(request, messages.INFO, "personal info is stored ")
+            profile_form.save()
+            return HttpResponseRedirect('/')
+        else:
+            messages.add_message(request, messages.INFO, "EVERY column need to fill !!!")
+        """
+        #WRITE
+        #get login user info
+        user = User.objects.get(username = username)
+        #create instance Diary for specific user
+        diary = models.Diary(user=user)
+        #container [form DiaryForm]  save [diary instance(user post)]
+        post_form = forms.DiaryForm(request.POST, instance=diary)
+        if post_form.is_valid():
+            messages.add_message(request, messages.INFO, "DIARY is stored ")
+            post_form.save()
+            return HttpResponseRedirect('/')
+        else:
+            messages.add_message(request, messages.INFO, "EVERY column need to fill !!!")
+        """
+    else:
+        #READ
+        profile_form = forms.ProfileForm()
+
     template = get_template('userinfo.html')
     html = template.render(locals())
     return HttpResponse(html)

@@ -1,0 +1,58 @@
+# register system
+pip install django-registration
+//settins.py
+ACCOUNT_ACTIVATION_DAYS = 7
+//urls.py
+url(r'^accounts/', include('registration.backends.hmac.urls')),
+//header.html
+<li><a href='/accounts/register'>REGISTER</a></li>
+
+## register page
+templates/registration/xxxxx
+    registration_form.html -> registration_complete.html
+//active email content
+    activation_email_subject.txt
+    activation_email.txt
+//active success/fail page
+    activation_complete.html
+    activate.html
+
+## database
+//forms.py
+class ProfileForm(forms.ModelForm):
+    class Meta:
+        model = models.Profile
+        fields = ['height', 'male', 'website']
+//views.py
+def userinfo(request):
+//userinfo.html
+profile_form
+
+## database relation
+//class User(models.Model):<1:1>class Profile(models.Model):
+class User(models.Model):
+username
+password
+email
+first_name
+last_name
+
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    height = models.PositiveIntegerField(default=160)
+    male = models.BooleanField(default=False)
+    website = models.URLField(null=True)
+
+//class Diary(models.Model):<n:1>class User(models.Model):<1:1>class Profile(models.Model):
+class Diary(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    budget = models.FloatField(default=0)
+    weight = models.FloatField(default=0)
+    note = models.TextField()
+    ddate = models.DateField()
+
+## bug
+send register email fail
+//settings.py
+MAILGUN_ACCESS_KEY
+MAILGUN_SERVER_NAME

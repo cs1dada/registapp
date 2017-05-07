@@ -1,0 +1,36 @@
+<!-- registration_form.html (ch10www project) -->
+{% extends "base.html" %}
+{% block title %}註冊分享日記{% endblock %}
+
+{% block content %}
+<div class='container'>
+
+    <!-- message -->
+    {% for message in messages %}
+        <div class='alert alert-{{message.tags}}'>{{ message }}</div>
+    {% endfor %}
+
+    <!-- top: topic -->
+    <div class='row'>
+        <div class='col-md-12'>
+            <div class='panel panel-default'>
+                <div class='panel-heading' align=center>
+                <h3>註冊分享日記網站</h3>
+        </div>
+    </div>
+
+    <!-- mid: body -->
+    <form action='.' method='POST'>
+        {% csrf_token %}
+            <table>
+                {{ form.as_table }}
+            </table>
+        <input type='submit' value='註冊'><br/>
+    </form>
+
+<!-- end container -->
+</div>
+<!-- end block -->
+{% endblock %}
+
+

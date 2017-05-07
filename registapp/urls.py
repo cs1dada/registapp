@@ -1,4 +1,4 @@
-"""sessionapp URL Configuration
+"""registapp URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/1.8/topics/http/urls/
@@ -26,4 +26,5 @@ urlpatterns = [
     url(r'^logout/$', views.logout),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^captcha/', include('captcha.urls')),
+    url(r'^accounts/', include('registration.backends.hmac.urls')),    
 ]
