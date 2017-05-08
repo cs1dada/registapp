@@ -19,6 +19,9 @@ from mysite import views
 
 urlpatterns = [
     url(r'^$', views.index),
+    url(r'^poll/(\d+)$', views.poll, name='poll-url'),
+    url(r'^vote/(\d+)/(\d+)$', views.vote, name='vote-url'),
+    #for delete: (id)(user_pass) = arg => def index(request, pid=None, del_pass=None):
     url(r'^(\d+)/(\w+)/$', views.index),
     url(r'^userinfo/$', views.userinfo),
     url(r'^post/$', views.posting),

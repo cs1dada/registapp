@@ -26,7 +26,7 @@ SECRET_KEY = 'y&ap$#@q@+a_60x_8jzg6%y(a!f46+f72r_&@-5don-7@92*@^'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 EMAIL_BACKEND = 'django_mailgun.MailgunBackend'
 MAILGUN_ACCESS_KEY = 'key-0c1da685d5e21e74cb106dcc3c67de90'

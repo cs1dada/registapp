@@ -15,28 +15,42 @@ from django.contrib.auth import authenticate
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
 
-def index(request, pid=None, del_pass=None):
-    '''    
-    if 'username' in request.session:
-        username = request.session['username']
-        useremail = request.session['useremail']
-    '''
-    #login?
-    if request.user.is_authenticated():
-        #get curent login user info  from auth.models User
-        username = request.user.username
-        useremail = request.user.email
-        try:
-            user = User.objects.get(username=username)
-            diaries = models.Diary.objects.filter(user=user).order_by('-ddate')
-        except:
-            pass
+def index(request):
+    polls = models.Poll.objects.all()
 
     messages.get_messages(request)
 
     template = get_template('index.html')
     html = template.render(locals())
     return HttpResponse(html)
+
+def poll(request, pollid):
+    try:
+        poll = models.Poll.objects.get(id = pollid)
+    except:
+        poll = None
+
+    if poll is not None:
+        pollitems = models.PollItem.objects.filter(poll = poll).order_by('-vote')
+
+    messages.get_messages(request)
+
+    template = get_template('poll.html')
+    html = template.render(locals())
+    return HttpResponse(html)
+
+def vote(request, pollid, pollitemid):
+    try:
+        pollitem = models.PollItem.objects.get(id = PollItem)
+    except:
+        pollitem = None
+
+    if pollitem is not None:
+        pollitem.vote = pollitem.vote + 1
+        pollitem.save()
+
+    target_url = '/poll/' + pollid
+    return redirect(target_url)
 
 def login(request):
     if request.method == 'POST':

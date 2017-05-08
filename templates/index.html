@@ -1,7 +1,6 @@
 <!-- index.html (ch08www project) -->
 {% extends "base.html" %}
-{% block title %}分享日記{% endblock %}
-
+{% block title %}投票趣{% endblock %}
 {% block content %}
 <div class='container'>
 
@@ -13,31 +12,28 @@
         <div class='col-md-12'>
             <div class='panel panel-default'>
                 <div class='panel-heading' align=center>
-                    <h3>{{ username | default:"我"}}的私人日記</h3>
+                    <h3>歡迎光臨投票趣</h3>
+                    <p>歡迎使用Facebook註冊/登入你的帳號，以擁有投票和製作投票的功能。</p> 
                 </div>
             </div>
         </div>
     </div>
 
-    {% for diary in diaries %}
-    {% cycle "<div class='row'>" "" "" %}
-        <div class='col-md-4'>
-            <div class='panel panel-primary'>
-                <div class='panel-heading' align=center>
-                    {{ diary.ddate }}
-                </div>
-                <div class='panel-body'>
-                    {{ diary.note | linebreaks }}
-                </div>
-                <div class='panel-footer'>
-                    今日花費：{{ diary.budget }}元，體重：{{ diary.weight }}公斤
-                </div>
+    <div class='row'>
+    {% for poll in polls %}
+        {% if forloop.first %}
+            <div class='list-group'>
+        {% endif %}
+            <a href='{% url "poll-url" poll.id %}' class='list-group-item'>
+                {{ poll.name }}
+            </a>
+        {% if forloop.last %}
             </div>
-        </div>    
-    {% cycle "" "" "</div>" %}
-    {% empty %}
-        <h3><em>您還沒輸入日記或是未登入網站</em></h3>
+        {% endif %}
+        {% empty %}
+            <center><h3>目前並沒有活躍中的投票項目</h3></center>
     {% endfor %}
+    </div>
     
 <!-- end container -->
 </div>

@@ -3,21 +3,15 @@
         <div class='container-fluid'>
             <div class='navbar-header'>
                 <div class='navbar-brand' align=center>
-                    分享日記 
+                    投票趣
                 </div>
             </div>
             <ul class='nav navbar-nav'>
                 <li class='active'><a href='/'>Home</a></li>
-                    <!-- session username-->
-                    {% if username %} 
-                    <li><a href='/userinfo'>個人資料</a></li>
-                    <li><a href='/post'>寫日記</a></li>
-                    <li><a href='/logout'>登出</a></li>
-                    {% else %}
-                    <li><a href='/login'>登入</a></li>
-                    <li><a href='/accounts/register'>註冊</a></li>
-                    {% endif %}
-                    <li><a href='/admin'>後台管理</a></li>  
+                <li><a href='/accounts/signup'>註冊</a></li>
+                <li><a href='/accounts/login'>登入</a></li>
+                <li><a href='/accounts/logout'>登出</a></li>
+                <li><a href='/admin'>後台管理</a></li>  
             </ul>
         </div>
     </nav>

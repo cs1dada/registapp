@@ -17,6 +17,11 @@ templates/registration/xxxxx
     activation_complete.html
     activate.html
 
+## other
+//urls.py
+    #for delete: (id)(user_pass) = arg => def index(request, pid=None, del_pass=None):
+    url(r'^(\d+)/(\w+)/$', views.index),
+
 ## database
 //forms.py
 class ProfileForm(forms.ModelForm):
@@ -60,3 +65,60 @@ send register email fail
 csrf error
 //views.py
     html = template.render(locals(), request)
+======================================================================================
+# django-allauth
+
+## database
+//models.py
+class Poll(models.Model):
+    name = models.CharField(max_length=200, null=False)
+    created_at = models.DateField(auto_now_add=True)
+    enabled = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.name
+
+@python_2_unicode_compatible
+class PollItem(models.Model):
+    poll = models.ForeignKey(Poll, on_delete=models.CASCADE)
+    name = models.CharField(max_length=200, null=False)
+    image_url = models.CharField(max_length=200, null=True, blank=True)
+    vote = models.PositiveIntegerField(default=0)
+
+    def __str__(self):
+        return self.name    
+
+//admin.py
+#show detail item('user', 'name', 'created_at', 'enabled') info at admin page
+class PollAdmin(admin.ModelAdmin): 
+    list_display = ('user', 'name', 'created_at', 'enabled')
+    ordering = ('-created_at',)
+
+## setting
+//urls.py    
+    url(r'^poll/(\d+)$', views.poll, name='poll-url'),
+    url(r'^vote/(\d+)/(\d+)$', views.vote, name='vote-url'),
+
+## view
+//views.py
+def index(request):
+def poll(request, pollid):
+def vote(request, pollid, pollitemid):
+
+## templates
+header.html
+index.html
+poll.html
+
+## bug
+
+(venv) dada@dada-VirtualBox:~/workspace/project/registapp$ python manage.py makemigrations
+SystemCheckError: System check identified some issues:
+
+ERRORS:
+<class 'mysite.admin.PollAdmin'>: (admin.E108) The value of 'list_display[0]' refers to 'user', which is not a callable, an attribute of 'PollAdmin', or an attribute or method on 'mysite.Poll'.
+//admin.py
+    - list_display = ('user', 'name', 'created_at', 'enabled')
+    list_display = ('name', 'created_at', 'enabled')
+
+vote error
