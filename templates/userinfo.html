@@ -1,9 +1,12 @@
-<!-- login.html (ch09www project) -->
+<!-- userinfo.html (ch10www project) -->
 {% extends "base.html" %}
 {% block title %}分享日記{% endblock %}
 
 {% block content %}
 <div class='container'>
+    {% for message in messages %}
+        <div class='alert alert-{{message.tags}}'>{{ message }}</div>
+    {% endfor %}
 
     <div class='row'>
         <div class='col-md-12'>
@@ -11,6 +14,7 @@
                 <div class='panel-heading' align=center>
                     <h3>使用者資訊</h3>
                 </div>
+            </div>
         </div>
     </div>
 
@@ -24,12 +28,12 @@
                     電子郵件：{{ userinfo.user.email }}<br/>
                     身高：{{ userinfo.height }} cm<br/>
                     性別：{{ userinfo.male | yesno:"男生,女生"}}<br/>
-                    webside: <a href='{{userinfo.webside}}'>{{userinfo.website}}</a>
+                    個人網站：<a href='{{ userinfo.website }}'>{{ userinfo.website }}</a>
                 </div>
             </div>
         </div>
     </div>
-
+    
     <form name='myname' action='.' method='POST'>
         {% csrf_token %}
         <table>
@@ -37,7 +41,6 @@
         </table>
         <input type='submit' value='修改個人資料'>
     </form>
-    
 </div>
 {% endblock %}
 

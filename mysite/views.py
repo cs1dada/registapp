@@ -106,25 +106,26 @@ def userinfo(request):
         username = request.user.username
         #get user info  from User (not models.User)
         user = User.objects.get(username=username)
-        try:
-            #read user info from Profile database by user //User<1:!>Profile
-            userinfo = models.Profile.objects.get(user=user)
-        except:
-            #if read empty userinfo
-            #create instance Profile for specific user
-            userinfo = models.Profile(user=user)
+
+    try:
+        #read user info from Profile database by user //User<1:1>Profile
+        userinfo = models.Profile.objects.get(user=user)
+    except:
+        #if read empty userinfo
+        #create instance Profile for specific user
+        userinfo = models.Profile(user=user)
 
     #send ProfileForm POST?
     if request.method == 'POST':
         #WRITE
-        #container [form ProfileForm]  save [profile instance(user post)]
+        #container [form ProfileForm]  save [Profile(userinfo) instance(user-client post)]
         profile_form = forms.ProfileForm(request.POST, instance=userinfo)
         if profile_form.is_valid():
-            messages.add_message(request, messages.INFO, "personal info is stored ")
-            profile_form.save()
-            return HttpResponseRedirect('/')
+            messages.add_message(request, messages.INFO, "個人資料已儲存")
+            profile_form.save()  
+            return HttpResponseRedirect('/userinfo')
         else:
-            messages.add_message(request, messages.INFO, "EVERY column need to fill !!!")
+            messages.add_message(request, messages.INFO, '要修改個人資料，每一個欄位都要填...')
         """
         #WRITE
         #get login user info
@@ -145,7 +146,7 @@ def userinfo(request):
         profile_form = forms.ProfileForm()
 
     template = get_template('userinfo.html')
-    html = template.render(locals())
+    html = template.render(locals(), request)
     return HttpResponse(html)
 
 def listing(request):
