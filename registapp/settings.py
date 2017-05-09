@@ -24,7 +24,7 @@ ACCOUNT_ACTIVATION_DAYS = 7
 SECRET_KEY = 'y&ap$#@q@+a_60x_8jzg6%y(a!f46+f72r_&@-5don-7@92*@^'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ["*"]
 
