@@ -28,11 +28,6 @@ DEBUG = False
 
 ALLOWED_HOSTS = ["*"]
 
-EMAIL_BACKEND = 'django_mailgun.MailgunBackend'
-MAILGUN_ACCESS_KEY = 'key-0c1da685d5e21e74cb106dcc3c67de90'
-MAILGUN_SERVER_NAME = 'sandboxc633e75e325e4a93881f104dce40b35a.mailgun.org'
-
-
 # Application definition
 
 INSTALLED_APPS = (
@@ -43,8 +38,21 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'mysite',
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.facebook',    
+    'allauth.socialaccount.providers.twitter', 
     'captcha',
 )
+
+
+SITE_ID = 1
+LOGIN_REDIRECT_URL = '/'
+EMAIL_BACKEND = 'django_mailgun.MailgunBackend'
+MAILGUN_ACCESS_KEY = 'key-0c1da685d5e21e74cb106dcc3c67de90'
+MAILGUN_SERVER_NAME = 'sandboxc633e75e325e4a93881f104dce40b35a.mailgun.org'
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -92,9 +100,9 @@ DATABASES = {
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'zh-TW'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Taipei'
 
 USE_I18N = True
 
@@ -110,4 +118,5 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
+#for heroku
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')

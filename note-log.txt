@@ -111,7 +111,7 @@ index.html
 poll.html
 
 ## bug
-
+1. list_display = ('user', 'name', 'created_at', 'enabled')
 (venv) dada@dada-VirtualBox:~/workspace/project/registapp$ python manage.py makemigrations
 SystemCheckError: System check identified some issues:
 
@@ -119,6 +119,23 @@ ERRORS:
 <class 'mysite.admin.PollAdmin'>: (admin.E108) The value of 'list_display[0]' refers to 'user', which is not a callable, an attribute of 'PollAdmin', or an attribute or method on 'mysite.Poll'.
 //admin.py
     - list_display = ('user', 'name', 'created_at', 'enabled')
-    list_display = ('name', 'created_at', 'enabled')
+    + list_display = ('name', 'created_at', 'enabled')
 
-vote error
+2. git push heroku master
+/app/.heroku/python/bin/pip: No such file or directory
+把runtime.txt版本改成python-2.7.13就好惹
+
+3. DoesNotExist at /admin/login/
+http://stackoverflow.com/questions/9736975/django-admin-doesnotexist-at-admin
+
+INSTALLED_APPS = (
+    'django.contrib.sites',
+)
+SITE_ID = 1
+
+[Documentation] (https://docs.djangoproject.com/en/1.11/ref/contrib/sites/)
+**The “sites” framework**
+
+Django comes with an optional “sites” framework. It’s a hook for associating objects and functionality to particular websites, and it’s a holding place for the domain names and “verbose” names of your Django-powered sites.
+
+Use it if your single Django installation powers more than one site and you need to differentiate between those sites in some way.

@@ -21,13 +21,14 @@ urlpatterns = [
     url(r'^$', views.index),
     url(r'^poll/(\d+)$', views.poll, name='poll-url'),
     url(r'^vote/(\d+)/(\d+)$', views.vote, name='vote-url'),
-    #for delete: (id)(user_pass) = arg => def index(request, pid=None, del_pass=None):
-    url(r'^(\d+)/(\w+)/$', views.index),
-    url(r'^userinfo/$', views.userinfo),
-    url(r'^post/$', views.posting),
-    url(r'^login/$', views.login),
-    url(r'^logout/$', views.logout),
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^captcha/', include('captcha.urls')),
-    url(r'^accounts/', include('registration.backends.hmac.urls')),
+    url(r'^accounts/', include('allauth.urls')),
+    #for delete: (id)(user_pass) = arg => def index(request, pid=None, del_pass=None):
+    #url(r'^(\d+)/(\w+)/$', views.index),
+    #url(r'^userinfo/$', views.userinfo),
+    #url(r'^post/$', views.posting),
+    #url(r'^login/$', views.login),
+    #url(r'^logout/$', views.logout),
+    #url(r'^captcha/', include('captcha.urls')),
+    #url(r'^accounts/', include('registration.backends.hmac.urls')),
 ]
