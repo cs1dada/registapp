@@ -139,3 +139,5 @@ SITE_ID = 1
 Django comes with an optional “sites” framework. It’s a hook for associating objects and functionality to particular websites, and it’s a holding place for the domain names and “verbose” names of your Django-powered sites.
 
 Use it if your single Django installation powers more than one site and you need to differentiate between those sites in some way.
+
+4. {% if user.is_authenticated  %} cannot recoganize login user !!!

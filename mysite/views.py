@@ -10,9 +10,9 @@ from django.contrib import messages
 #database
 from mysite import models, forms
 #auth
-from django.contrib.auth.models import User
-from django.contrib.auth import authenticate
 from django.contrib import auth
+from django.contrib.auth import authenticate
+from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 
 def index(request):
@@ -24,6 +24,7 @@ def index(request):
     html = template.render(locals())
     return HttpResponse(html)
 
+@login_required
 def poll(request, pollid):
     try:
         poll = models.Poll.objects.get(id = pollid)
@@ -39,6 +40,7 @@ def poll(request, pollid):
     html = template.render(locals())
     return HttpResponse(html)
 
+@login_required
 def vote(request, pollid, pollitemid):
     try:
         pollitem = models.PollItem.objects.get(id = PollItem)

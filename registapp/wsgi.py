@@ -13,6 +13,6 @@ from django.core.wsgi import get_wsgi_application
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "registapp.settings")
 #heroku
-application = Cling(get_wsgi_application())
+#application = Cling(get_wsgi_application())
 #local test
-#application = get_wsgi_application()
+application = get_wsgi_application()
