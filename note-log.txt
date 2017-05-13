@@ -141,3 +141,5 @@ Django comes with an optional “sites” framework. It’s a hook for associati
 Use it if your single Django installation powers more than one site and you need to differentiate between those sites in some way.
 
 4. {% if user.is_authenticated  %} cannot recoganize login user !!!
+    + html = template.render(locals(), request)
+    - html = template.render(locals())

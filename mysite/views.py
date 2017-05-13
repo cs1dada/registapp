@@ -14,14 +14,24 @@ from django.contrib import auth
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 def index(request):
-    polls = models.Poll.objects.all()
+    all_polls = models.Poll.objects.all()
+    paginator = Paginator(all_polls, 5)
+    p = request.GET.get('p')
+    try:
+        polls = paginator.page(p)
+    except PageNotAnInteger:
+        polls = paginator.page(1)
+    except EmptyPage:
+        polls = paginator.page(paginator.num_pages)    
 
     messages.get_messages(request)
 
     template = get_template('index.html')
-    html = template.render(locals())
+    request_context = RequestContext(request)
+    html = template.render(locals(), request)
     return HttpResponse(html)
 
 @login_required
