@@ -1,0 +1,54 @@
+<!-- addpoll.html (mvote project) -->
+{% extends "base.html" %}
+{% block title %}投票趣{% endblock %}
+{% block content %}
+<div class='container'>
+{% for message in messages %}
+    <div class='alert alert-{{message.tags}}'>{{ message }}</div>
+{% endfor %}
+    <div class='row'>
+        <div class='col-md-12'>
+            <div class='panel panel-default'>
+                <div class='panel-heading' align=center>
+                    <h3>新增投票項目（問卷調查）</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+    <form method='POST' action='.'>
+        {% csrf_token %}
+        <table>
+            {{ form.as_table }}
+        </table>
+        <input type='submit' value='送出'>
+    </form>
+    <div class='row'>
+        <div class='col-sm-12'>
+            <div class='panel panel-info'>
+                <div class='panel panel-heading'>
+                    <h4>我的投票項目</h4>
+                </div>
+                <div class='panel panel-body'>
+                    {% for poll in polls %}
+                        <div class='listgroup'>
+                            <div class='listgroup-item'>
+                                <a href='{% url "delpoll-url" poll.id %}' title='Delete'>
+                                    <span class='glyphicon glyphicon-trash'>
+                                    </span>
+                                </a>
+                                <a href="{% url 'addpollitem-url' poll.id %}">
+                                    {{ poll.name }}
+                                </a>
+                            </div>
+                        </div>
+                    {% empty %}
+                        <em>還沒有任何投票項目</em>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+

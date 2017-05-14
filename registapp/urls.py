@@ -20,8 +20,17 @@ from mysite import views
 urlpatterns = [
     url(r'^$', views.index),
     url(r'^poll/(\d+)$', views.poll, name='poll-url'),
+    url(r'^govote/$', views.govote),
     url(r'^vote/(\d+)/(\d+)$', views.vote, name='vote-url'),
-    url(r'^govote/$', views.govote),    
+
+    url(r'^delpoll/(\d+)$', views.delpoll, name='delpoll-url'),
+    url(r'^delpollitem/(\d+)/(\d+)$', views.delpollitem, name='delpollitem-url'),
+    
+    url(r'^addpoll/$', views.addpoll, name='addpoll-url'),
+    
+    url(r'^addpollitem/$', views.addpollitem),
+    url(r'^addpollitem/(\d+)$', views.addpollitem, name='addpollitem-url'),
+
     url(r'^admin/', include(admin.site.urls)),
     url(r'^accounts/', include('allauth.urls')),
     #for delete: (id)(user_pass) = arg => def index(request, pid=None, del_pass=None):

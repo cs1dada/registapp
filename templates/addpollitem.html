@@ -1,0 +1,53 @@
+<!-- addpollitem.html (mvote project) -->
+{% extends "base.html" %}
+{% block title %}投票趣{% endblock %}
+{% block content %}
+<div class='container'>
+{% for message in messages %}
+    <div class='alert alert-{{message.tags}}'>{{ message }}</div>
+{% endfor %}
+    <div class='row'>
+        <div class='col-md-12'>
+            <div class='panel panel-default'>
+                <div class='panel-heading'>
+                    <h3>新增【{{poll.name}}】的投票選項</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+    <form method='POST' action=".">
+        {% csrf_token %}
+        <table>
+            {{ form.as_table }}
+        </table>
+        <input type='hidden' name='pollid' value='{{poll.id}}'>
+        <input type='submit' value='送出'>
+    </form>
+    <div class='row'>
+        <div class='col-sm-12'>
+            <div class='panel panel-info'>
+                <div class='panel panel-heading'>
+                    <h4>此投票項目的所有選項</h4>
+                </div>
+                <div class='panel panel-body'>
+                    {% for pollitem in pollitems %}
+                        <div class='listgroup'>
+                            <div class='listgroup-item'>
+                                <a href='{% url "delpollitem-url" poll.id pollitem.id %}' title='Delete'>
+                                    <span class='glyphicon glyphicon-trash'>
+                                    </span>
+                                </a>
+                                    <a href='{{pollitem.image_url}}'>{{ pollitem.name }}</a>
+                            </div>
+                        </div>
+                    {% empty %}
+                        <em>還沒有任何投票項目的選項</em>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
