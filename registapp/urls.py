@@ -21,6 +21,7 @@ urlpatterns = [
     url(r'^$', views.index),
     url(r'^poll/(\d+)$', views.poll, name='poll-url'),
     url(r'^vote/(\d+)/(\d+)$', views.vote, name='vote-url'),
+    url(r'^govote/$', views.govote),    
     url(r'^admin/', include(admin.site.urls)),
     url(r'^accounts/', include('allauth.urls')),
     #for delete: (id)(user_pass) = arg => def index(request, pid=None, del_pass=None):

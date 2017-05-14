@@ -18,7 +18,9 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 def index(request):
     all_polls = models.Poll.objects.all()
+    # page module, each page has 5 polls, paginator= page module instance
     paginator = Paginator(all_polls, 5)
+    # ?p=xxx, page number
     p = request.GET.get('p')
     try:
         polls = paginator.page(p)
@@ -53,7 +55,7 @@ def poll(request, pollid):
 @login_required
 def vote(request, pollid, pollitemid):
     try:
-        pollitem = models.PollItem.objects.get(id = PollItem)
+        pollitem = models.PollItem.objects.get(id = pollitemid)
     except:
         pollitem = None
 
@@ -63,6 +65,22 @@ def vote(request, pollid, pollitemid):
 
     target_url = '/poll/' + pollid
     return redirect(target_url)
+
+@login_required
+def govote(request):
+    if request.method == "GET" and request.is_ajax():
+        pollitemid = request.GET.get('pollitemid')
+        pollid = request.GET.get('pollid')
+        try:
+            pollitem = models.PollItem.objects.get(id=pollitemid)
+            pollitem.vote = pollitem.vote + 1
+            pollitem.save()
+            votes = pollitem.vote
+        except:
+            votes = 0
+    else:
+        votes = 0
+    return HttpResponse(votes)
 
 def login(request):
     if request.method == 'POST':

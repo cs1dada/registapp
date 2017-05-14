@@ -4,6 +4,33 @@
 {% block title %}投票趣{% endblock %}
 
 {% block content %}
+
+<!-- jQuery + AJAX -->
+<script>
+$(document).ready(function() {
+{% for pollitem in pollitems %}
+    $("#govote-{{pollitem.id}}").click(function(){
+        var pollitemid = $("#govote-{{pollitem.id}}").data("itemid");
+        $.ajax({
+            type: "GET",
+            url: "/govote/",
+            data: {
+                "pollitemid": pollitemid,
+                "pollid": {{poll.id}},
+            },
+            success: function(votes) {
+                if (votes==0) {
+                    alert("無法投票");
+                } else {
+                    $("#pollitem-id-{{pollitem.id}}").html(votes);
+                }
+            } 
+        });
+    });
+{% endfor %}
+});
+</script>
+
 <div class='container'>
 
     {% for message in messages %}
@@ -44,7 +71,8 @@
                         </span>
                     </a>
                     &nbsp;
-                    目前票數：{{ pollitem.vote }}</span></h4>
+                    目前票數：<span id='pollitem-id-{{pollitem.id}}'>{{ pollitem.vote }}</span></h4>
+                    <button class='btn btn-primary' id='govote-{{pollitem.id}}' data-itemid='{{pollitem.id}}'>投這個一票</button>
                 </div>
 
             </div>

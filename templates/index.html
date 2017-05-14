@@ -15,10 +15,12 @@
                 <div class='panel-heading' align=center>
                     <h3>歡迎光臨投票趣</h3>
                     {% if user.is_authenticated %}
+                        <!-- fb user -->
                         {% if user.socialaccount_set.all.0.extra_data.name %}
                             {{user.socialaccount_set.all.0.extra_data.name}}<br/>
                             <img src='{{user.socialaccount_set.all.0.get_avatar_url}}' width='100'>
                         {% else %}
+                            <!-- email register user -->
                             Welcome: {{ user.username }}
                         {% endif %}
                     {% else %}
@@ -30,6 +32,7 @@
     </div>
 
     <div class='row'>
+            <!-- refer view.index Paginator module -->
             <button class='btn btn-info'>
                 目前是第{{ polls.number }}頁</a>
             </button>
