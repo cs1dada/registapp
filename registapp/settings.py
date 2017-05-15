@@ -90,7 +90,10 @@ WSGI_APPLICATION = 'registapp.wsgi.application'
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
 DATABASES = {
-    'default': dj_database_url.config()
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
 }
 '''
     'default': {
@@ -122,3 +125,7 @@ STATICFILES_DIRS = [
 ]
 #for heroku
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+DATABASES = {
+    'default': dj_database_url.config()
+}
